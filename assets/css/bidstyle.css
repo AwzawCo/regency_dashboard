@@ -1,15 +1,8 @@
 #success_message{ display: none;}
 
 .error {
-    color: blue;
+    color: red;
     font-size: 80%;
-}
-.form-group.required .control-label:after { 
-    color: #d00;
-    content: "*";
-    position: absolute;
-    margin-left: 8px;
-    top:7px;
 }
 
 .btn span.glyphicon {    			
@@ -19,4 +12,16 @@
 	opacity: 1;				
 }
 
+hr {
+	border-color: black;
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0; 
+}
 
+.input-group, .input-group .form-control {
+	height:100% !important;
+}

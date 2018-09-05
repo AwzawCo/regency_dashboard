@@ -8,6 +8,15 @@ class Authorization extends CI_Controller {
         $this->load->Library('session');
     }
 
+    public function authenticateToken(){
+    	//Authenticate the token first.
+		$token = isset($_SESSION['token']) ? $_SESSION['token'] : NULL;
+		if(!$this->auth_model->authenticate($token)) {
+			$this->session->set_flashdata("message","You are not logged in");
+			redirect();
+		}
+    }
+
 	public function verifyPasswordReset(){
 		$get = $this->input->get();
 		$data['temp'] = (isset($get['token']) ? $get['token'] :"" );

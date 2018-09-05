@@ -334,7 +334,7 @@ class CI_Session {
 	 * and the one guy who does, nobody has the energy to argue with.
 	 *
 	 * So we were forced to make changes, and OF COURSE something was
-	 * going to break and now we have this. -- Narf
+	 * going to break and now we have this pile of shit. -- Narf
 	 *
 	 * @return	void
 	 */

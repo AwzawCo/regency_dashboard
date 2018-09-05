@@ -13,7 +13,7 @@
 ?> 
 
 <!-- <?php  var_dump($tableHeaders)?> -->
-
+<!-- 
 <div class="container">
   <div class="well form-horizontal">
   <div class="row">
@@ -67,23 +67,23 @@
   </div>
   </div>
 </div>
-
+ -->
 
 <div class="container">
 
     <?php
-      $attributes = array('id' => 'bid_form_bridgestreet',
-                          'class' => 'well form-horizontal',
-                          'role' => 'form',
-                          'action' => '');
+      // $attributes = array('id' => 'bid_form_bridgestreet',
+      //                     'class' => 'well form-horizontal',
+      //                     'role' => 'form',
+      //                     'action' => '');
 
-      echo form_open('dashboard/createBid', $attributes); 
+      // $url = "dashboard/createBid?id=". $id. "&s=" .$source;
+      // //echo $url;
+      // echo form_open($url, $attributes, $_GET); 
     ?>
 
   <fieldset>
-      
   <legend><?php echo $header?></legend>
-  
 
       <!-- left column -->                            
       <div class="col-sm-6">
@@ -221,8 +221,6 @@
             </div>
         </div>
 
-
-
         <div class="form-group">
           <label class="col-md-2 control-label">Amenities</label>
           <div class="col-md-10">
@@ -243,7 +241,7 @@
               </div>
               <div class="checkbox">
                   <label>
-                      <input type="checkbox" name="hosting" value="airConditioning" <?php echo set_checkbox('airConditioning', 1); ?>/> High-Speed Internet
+                      <input type="checkbox" name="hosting" value="airConditioning" <?php echo set_checkbox('internet', 1); ?>/> High-Speed Internet
                   </label>
               </div>
               <div class="checkbox">
@@ -253,7 +251,7 @@
               </div>
               <div class="checkbox">
                   <label>
-                      <input type="checkbox" name="hosting" value="keysMailed" <?php echo set_checkbox('keysMailed', 1); ?>/> Keys mailed to guest
+                      <input type="checkbox" name="hosting" value="keysMailed" <?php echo set_checkbox('keys', 1); ?>/> Keys mailed to guest
                   </label>
               </div>
               <div class="checkbox">
@@ -273,7 +271,7 @@
               </div>
               <div class="checkbox">
                   <label>
-                      <input type="checkbox" name="hosting" value="satelliteCableTv" <?php echo set_checkbox('satelliteCableTv', 1); ?>/> Satellite/Cable TV
+                      <input type="checkbox" name="hosting" value="satelliteCableTv" <?php echo set_checkbox('TV', 1); ?>/> Satellite/Cable TV
                   </label>
               </div>
               <div class="checkbox">
@@ -289,7 +287,7 @@
           </div>
         </div>
 
-        <?php echo form_error('petFee'); ?>
+        <?php echo form_error('country'); ?>
         <div class="form-group">
           <label class="col-sm-2 control-label">Pet Fee</label>
             <div class="col-sm-10">

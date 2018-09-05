@@ -22,10 +22,10 @@ class metrics_model extends CI_Model{
 
 	public function buildActiveLeads(){
 		//BRIDGESTREET
-		$bs_res = $this->db_bs->query("SELECT id as leadID, bidID, timestamp, locale, moveIn, moveOut, 'BridgeStreet' as source FROM ActiveRequests WHERE status =1 ORDER BY id DESC LIMIT 20");
+		$bs_res = $this->db_regency->query("SELECT id as leadID, bidID, timestamp, locale, moveIn, moveOut, 'BridgeStreet' as source FROM Leads WHERE status =1 and source = 'bridgestreet' ORDER BY id DESC LIMIT 20");
 		//SIRVA
-		$sirva_res = $this->db_sirva->query("SELECT id, reservationNum as leadID, timestamp, desiredLocation as locale, arrivalDate as moveIn, minimumStay as moveOut, 'Sirva' as source FROM ActiveRequests where status =1 ORDER BY id DESC LIMIT 20");
-		$regency_res = $this->db_regency->query("SELECT id as leadID, address as locale, moveInDate as moveIn, moveOutDate as moveOut, 'Regency' as source FROM ActiveLead WHERE status=1");
+		$sirva_res = $this->db_regency->query("SELECT id, reservationNum as leadID, timestamp, desiredLocation as locale, arrivalDate as moveIn, minimumStay as moveOut, 'Sirva' as source FROM Leads where status = 1 and source = 'sirva' ORDER BY id DESC LIMIT 20");
+		$regency_res = $this->db_regency->query("SELECT id as leadID, address as locale, moveInDate as moveIn, moveOutDate as moveOut, 'Regency' as source FROM Leads WHERE status=1 and source='regency'");
 		$data = array_merge($regency_res->result_array(),$bs_res->result_array(), $sirva_res->result_array());
 
 		//$data = $sirva_res->result_array();
@@ -90,7 +90,7 @@ class metrics_model extends CI_Model{
 	}
 
 	public function markLeadAsInactive($id){
-		$data = $this->db_regency->query("UPDATE ActiveLead set status=0 WHERE id=$id");
+		$data = $this->db_regency->query("UPDATE Leads set status=0 WHERE id=$id");
 		return $data;
 	}
 }

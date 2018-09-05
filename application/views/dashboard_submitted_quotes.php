@@ -16,6 +16,7 @@
       <tr>
       <?php 
         foreach ($columns as $key => $header) {
+          //Prepare for some ugly-ass code.
           $id = $header['id'];
           $size = $header['size'];
           $label = $header['label'];

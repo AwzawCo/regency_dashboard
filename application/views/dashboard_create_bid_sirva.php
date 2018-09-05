@@ -5,19 +5,15 @@
 
 //Defaults
    $_POST['leadID'] = $id;
-
    // $_POST['starterPackage'] = "";
 
 ?> 
 
-
-
 <div class="container">
   <div class="well form-horizontal">
     <div class="row">
-          <legend><?php echo $leadDetail?></legend>
-
               <div class="col-sm-12">
+                <legend><?php echo $leadDetail?></legend>
                 <table class="table table-hover">
                   <thead>
                     <tr>
@@ -72,12 +68,14 @@
 <div class="container">
 
     <?php
-      $attributes = array('id' => 'bid_form_bridgestreet',
+      $attributes = array('id' => 'bid_form_sirva',
                           'class' => 'well form-horizontal',
                           'role' => 'form',
                           'action' => '');
 
-      echo form_open('dashboard/createBid', $attributes); 
+      $url = "dashboard/createBid?id=". $id. "&s=" .$source;
+      //echo $url;
+      echo form_open($url, $attributes, $_GET); 
     ?>
 
   <fieldset>
@@ -87,6 +85,7 @@
       <!-- left column -->                            
       <div class="col-sm-6">
 
+        <?php echo form_error('propertyType'); ?>
         <div class="form-group">
           <label class="col-md-4 control-label">Property Type/Level</label>
             <div class="col-md-6 inputGroupContainer2">
@@ -169,6 +168,7 @@
             </div>
         </div>
 
+        <?php echo form_error('distance'); ?>
         <div class="form-group"> 
           <label class="col-md-2 control-label">Approximate Distance</label>
             <div class="col-md-10 selectContainer">
@@ -233,6 +233,7 @@
           </div>
         </div>
 
+        <?php echo form_error('rate'); ?>
         <div class="form-group">
           <label class="col-md-2 control-label">Rate</label>
           <div class="col-md-6 inputGroupContainer2">
@@ -240,6 +241,7 @@
             <label><input type="radio" name="rate" value="Daily" <?php echo  set_radio('rate', 'Daily'); ?>/>Daily</label>
             <label><input type="radio" name="rate" value="Weekly" <?php echo  set_radio('rate', 'Weekly'); ?>/>Weekly</label>
             <label><input type="radio" name="rate" value="Montly" <?php echo  set_radio('rate', 'Monthly'); ?>/>Monthly</label>
+            <?php echo form_error('rateValue'); ?>
             <input value="<?php echo set_value('rateValue'); ?>" type="text" class="form-control" name="rateValue" placeholder="$">
           </div>
           </div>
@@ -338,6 +340,7 @@
           </div>
         </div>
 
+        <?php echo form_error('internet'); ?>
         <div class="form-group">
           <label class="col-md-4 control-label">High-Speed Internet</label>
           <div class="col-md-6 inputGroupContainer2">
@@ -351,6 +354,7 @@
           </div>
         </div>
 
+        <?php echo form_error('localPhone'); ?>
         <div class="form-group">
           <label class="col-md-4 control-label">Local Phone</label>
           <div class="col-md-6 inputGroupContainer2">
@@ -364,6 +368,7 @@
           </div>
         </div>
 
+        <?php echo form_error('cable'); ?>
         <div class="form-group">
           <label class="col-md-4 control-label">Cable Service</label>
           <div class="col-md-6 inputGroupContainer2">
@@ -379,6 +384,7 @@
           </div>
         </div>
 
+        <?php echo form_error('laundry'); ?>
         <div class="form-group">
           <label class="col-md-4 control-label">Laundry Service</label>
           <div class="col-md-6 inputGroupContainer2">
@@ -391,6 +397,7 @@
           </div>
         </div>
 
+        <?php echo form_error('parking'); ?>
         <div class="form-group">
           <label class="col-md-4 control-label">Parking</label>
           <div class="col-md-6 inputGroupContainer2">
@@ -404,6 +411,7 @@
           </div>
         </div>
 
+        <?php echo form_error('houseKeeping'); ?>
         <div class="form-group">
           <label class="col-md-4 control-label">House Keeping</label>
           <div class="col-md-6 inputGroupContainer2">
@@ -436,7 +444,7 @@
           </div>
         </div>
 
-        <?php echo form_error('petInfo'); ?>
+        <?php echo form_error('petFee'); ?>
         <div class="form-group">
           <label class="col-sm-2 control-label">Pet Fee/Rent</label>
           <div class="col-sm-3">
@@ -444,6 +452,7 @@
             <input value="<?php echo set_value('petFee'); ?>" type="text" class="form-control" name="petFee" placeholder="$ Fee">
           </div>
 
+        <?php echo form_error('petRent'); ?>
           <div class="col-sm-7">
           <label  class="sr-only"></label>
             <input value="<?php echo set_value('petRent'); ?>" type="text" class="form-control" name="petRent" placeholder="$ Rent/Mo">
@@ -465,14 +474,9 @@
      
         <div class="form-group">
           <div class="col-md-12 text-center"> 
-          <?php
-            $source = isset($source) ? $source : "";  
-            if($source != "Regency") {
-              echo "Sorry, you can only create bids for Regency Leads at the moment";
-            }
-            else{
-              echo "<button id=\"singlebutton\" type=\"submit\" class=\"btn btn-primary\" name=\"singlebutton\" >Create Bid<span class=\"glyphicon glyphicon-send\"></span></button>";
-            }
+          <?php            
+              echo "<button id=\"singlebutton\" type=\"submit\" value=\"Submit\" class=\"btn btn-primary\" name=\"singlebutton\" >Create Bid<span class=\"glyphicon glyphicon-send\"></span></button>";
+
           ?>
           </div>
         </div>

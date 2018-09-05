@@ -3,39 +3,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 header("Access-Control-Allow-Origin: *");
 
 class query_model extends CI_Model{
-	private $db_bs;
 	private $db_sirva;
+	private $db_bs;
 	private $db_regency;
 	public function __construct(){
 		
+		$this->db_regency = $this->load->database('Regency', TRUE);
 		$this->db_bs = $this->load->database('BridgeStreet', TRUE);
 		$this->db_sirva = $this->load->database('Sirva', TRUE);
-		$this->db_regency = $this->load->database('Regency', TRUE);
 		date_default_timezone_set ( "America/Los_Angeles" );
 	}
 
-	public function select($address){
-		$this->load->database();
-		if(!$address){
-			return "BAD";
-		}
-		else{
-			$query = $this->db->query('SELECT * FROM SubmittedQuotes WHERE propertyAddress ="'.$address.'"');
-			$myRental = $query->result_array();
-			return $myRental;
-	 
-		}
-	}
 
 	public function getLeadDetails($id=null,$source=null){
 
 		if(!$id){
 			return false;
 		}
-
 		if($source == "Regency"){
 
-			$res = $this->db_regency->query("SELECT  numBedrooms, moveInDate, moveOutDate, address, numBathrooms, numPets, typeWeightBreed, specialRequest FROM ActiveLead WHERE id=$id");
+			$res = $this->db_regency->query("SELECT  numBedrooms, moveInDate, moveOutDate, address, numBathrooms, numPets, typeWeightBreed, specialRequest FROM Leads WHERE id=$id");
 
 			$res = $res->result_array()[0];
 			$res['id'] = $id;
@@ -43,7 +30,7 @@ class query_model extends CI_Model{
 		}
 
 		if($source == "BridgeStreet"){
-			$res = $this->db_bs->query("SELECT  numStudios, numOneBedroom, numTwoBedroom, numThreeBedroom, moveIn, moveOut, locale, LOS, amenities, specialRequests FROM ActiveRequests WHERE id=$id");
+			$res = $this->db_regency->query("SELECT numStudios, numOneBedroom, numTwoBedroom, numThreeBedroom, moveIn, moveOut, locale, LOS, amenities, specialRequests FROM Leads WHERE id=$id");
 			//$dump = $res->result_array();
 			$res = $res->result_array()[0];
 			$res['unitSize'] = '';
@@ -57,13 +44,11 @@ class query_model extends CI_Model{
 		}
 
 		if($source == "Sirva"){
-			$res = $this->db_sirva->query("SELECT  unitSize, reservationNum, arrivalDate, minimumStay, numOccupants, desiredLocation, pets, typeWeightBreed, specialRequests FROM ActiveRequests WHERE reservationNum=$id");//id or reservationNum
+			$res = $this->db_regency->query("SELECT  unitSize, reservationNum, arrivalDate, minimumStay, numOccupants, desiredLocation, pets, typeWeightBreed, specialRequests FROM Leads WHERE reservationNum=$id");//id or reservationNum
 			$res = $res->result_array()[0];
 			return $res;
 		}
-
 	}
-
 	/*
 		Get Bid History:
 		@params:
@@ -84,8 +69,8 @@ class query_model extends CI_Model{
 		}
 		try {
 			$bids = $this->db_bs->query("SELECT timestamp FROM SubmittedQuotes WHERE timestamp > \"2017-09-01 00:00:00.0\" AND DATEDIFF(FROM_UNIXTIME($today),timestamp) < $days AND status=1 ORDER BY timestamp DESC");
-			$leads = $this->db_bs->query("SELECT timestamp FROM ActiveRequests WHERE timestamp > \"2017-09-01 00:00:00.0\" and DATEDIFF(FROM_UNIXTIME($today),timestamp) < $days ORDER BY timestamp DESC");
-			$sirvaLeads = $this->db_sirva->query("SELECT timestamp FROM ActiveRequests WHERE timestamp > \"2017-09-01 00:00:00.0\" and DATEDIFF(FROM_UNIXTIME($today),timestamp) < $days ORDER BY timestamp DESC");
+			$leads = $this->db_regency->query("SELECT timestamp FROM Leads WHERE timestamp > \"2017-09-01 00:00:00.0\" and DATEDIFF(FROM_UNIXTIME($today),timestamp) < $days and source='bridgestreet' ORDER BY timestamp DESC");
+			$sirvaLeads = $this->db_regency->query("SELECT timestamp FROM Leads WHERE timestamp > \"2017-09-01 00:00:00.0\" and DATEDIFF(FROM_UNIXTIME($today),timestamp) < $days and source = 'sirva' ORDER BY timestamp DESC");
 		} catch (Exception $e) {
 			return false;
 
@@ -142,9 +127,9 @@ class query_model extends CI_Model{
 		// $bs_leads = $this->db_bs->query("SELECT COUNT(*) FROM ActiveRequests WHERE DATEDIFF(FROM_UNIXTIME($today),timestamp) < 1 ORDER BY timestamp DESC")->result_array()[0]["COUNT(*)"];
 		// $regency_leads = $this->db_regency->query("SELECT COUNT(*) FROM ActiveLead WHERE DATEDIFF(FROM_UNIXTIME($today),timestamp) < 1 ORDER BY timestamp DESC")->result_array()[0]["COUNT(*)"];
 		// $sirva_leads = $this->db_bs->query("SELECT COUNT(*) FROM ActiveRequests WHERE DATEDIFF(FROM_UNIXTIME($today),timestamp) < 1 ORDER BY timestamp DESC")->result_array()[0]["COUNT(*)"];
-		$bs_leads = $this->db_bs->query("SELECT COUNT(*) FROM ActiveRequests where status=1")->result_array()[0]["COUNT(*)"];
-		$regency_leads = $this->db_regency->query("SELECT COUNT(*) FROM ActiveLead where status=1")->result_array()[0]["COUNT(*)"];
-		$sirva_leads = $this->db_sirva->query("SELECT COUNT(*) FROM ActiveRequests WHERE status=1")->result_array()[0]["COUNT(*)"];
+		$bs_leads = $this->db_regency->query("SELECT COUNT(*) FROM Leads where status=1 and source = 'bridgestreet'")->result_array()[0]["COUNT(*)"];
+		$regency_leads = $this->db_regency->query("SELECT COUNT(*) FROM Leads where status=1 and source = 'regency'")->result_array()[0]["COUNT(*)"];
+		$sirva_leads = $this->db_regency->query("SELECT COUNT(*) FROM Leads WHERE status=1 and source='sirva'")->result_array()[0]["COUNT(*)"];
 		$bids = $this->db_bs->query("SELECT COUNT(*) FROM SubmittedQuotes WHERE DATEDIFF(FROM_UNIXTIME($today),timestamp) < 1 ORDER BY timestamp DESC")->result_array()[0]["COUNT(*)"];
 		$won = $this->db_bs->query("SELECT COUNT(*) FROM SubmittedQuotes WHERE DATEDIFF(FROM_UNIXTIME($today),timestamp) < 30 AND status=1 ORDER BY timestamp DESC")->result_array()[0]["COUNT(*)"];
 		

@@ -49,6 +49,14 @@ class auth_model extends CI_Model {
 		return $this->parseToken($token) ? true : false;
 	}
 
+	public function authenticateToken($token){
+    	//Authenticate the token first.
+		if(!$this->parseToken($token) ? true : false) {
+			$this->session->set_flashdata("message","You are not logged in");
+			redirect();
+		}
+    }
+
 	public function getUsername ($token){
 		$data = $this->parseToken($token);
 		if(isset($data->username)){

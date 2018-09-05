@@ -41,8 +41,9 @@
         echo "<td class=\"col-md-2\">".$res[$i]->moveOut."</td>";
         echo "<td class=\"col-md-2\">".$res[$i]->source."</td>";
         $header = '?id='.$res[$i]->leadID.'&s='.$res[$i]->source;
+        
         echo "<td class=\"col-md-2\"><a href=\"".site_url('dashboard/createBid').$header."\" class=\"btn btn-info\" role=\"button\">Create Bid for this Lead</a>";
-        if($res[$i]->source == "Regency") echo "<a href=\"#\" class=\"glyphicon glyphicon-trash btn btn-danger\" role=\"button\" data-toggle=\"tooltip\" title=\"Mark this lead as inactive\" onclick=\"warning(this)\" id=\"".$res[$i]->leadID."\"></a>";
+
         // echo "<td><a href=\"#\" class=\"glyphicon glyphicon-file btn btn-danger\" role=\"button\"></a>";
         // echo "<td><span class=\"glyphicon glyphicon-trash\"></span>&nbsp;</td>";
         echo "</tr>";

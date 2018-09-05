@@ -1,124 +1,172 @@
-  $(document).ready(function() {
+$(document).ready(function() {
     $('#bid_form_bridgestreet').bootstrapValidator({
         // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
+            live: 'enabled',
             validating: 'glyphicon glyphicon-refresh'
+
         },
         fields: {
-            first_name: {
+            repFirstName: {
                 validators: {
                         stringLength: {
-                        min: 2,
+                        min: 6,
+                        max: 30,
+                        message: 'The username must be more than 6 and less than 30 characters long'
                     },
                         notEmpty: {
                         message: 'Please supply your first name'
                     }
                 }
             },
-             last_name: {
+             repLastName: {
                 validators: {
-                     stringLength: {
-                        min: 2,
-                    },
                     notEmpty: {
                         message: 'Please supply your last name'
                     }
                 }
             },
-            email: {
+            repPhone: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please supply your email address'
+                    phone: {
+                        country: 'US'
                     },
+                    notEmpty: {
+                        message: 'Please supply your phone number'
+                    }
+                }
+            },
+            repEmail: {
+                validators: {
                     emailAddress: {
-                        message: 'Please supply a valid email address'
-                    }
-                }
-            },
-            address: {
-                validators: {
-                        stringLength: {
-                        min: 10,
-                    },
-                        notEmpty: {
-                        message: 'Please supply the address'
-                    }
-                }
-            },
-             city: {
-                validators: {
-                     stringLength: {
-                        min: 2,
                     },
                     notEmpty: {
-                        message: 'Please supply the city'
+                        message: 'Please supply a valid Email Address'
                     }
                 }
             },
-            state: {
+            // coreInventory: {
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'Please select Inventory'
+            //         },
+            //     }
+            // },
+            propertyName: {
                 validators: {
-                     stringLength: {
-                        min: 2,
-                    },
+                        notEmpty: {
+                        message: 'Please supply the Property Name'
+                    }
+                }
+            },
+            // propertyURL: {
+            //     validators: {
+            //             notEmpty: {
+            //             message: 'Please supply the Property Name'
+            //         }
+            //     }
+            // },
+            propertyAddress: {
+                validators: {
+                        notEmpty: {
+                        message: 'Please supply the Property Name'
+                    }
+                }
+            },
+            // propertyAddress2: {
+            //     validators: {
+            //             notEmpty: {
+            //             message: 'Please supply the Property Name'
+            //         }
+            //     }
+            // },
+             propertyCity: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please supply the city name'
+                    }
+                }
+            },
+            propertyState: {
+                validators: {
                     notEmpty: {
                         message: 'Please supply the state'
                     }
                 }
             },
-            zipcode: {
+            propertyZip: {
                 validators: {
-                     stringLength: {
-                        min: 5,
-                    },
                     notEmpty: {
                         message: 'Please supply the zipcode'
                     }
                 }
             },
-            distance: {
+            propertyCountry: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select the distance'
+                        message: 'Please supply the Country'
                     }
                 }
             },
-            unitSize: {
+            dateAvailable: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select the unitSize'
+                        message: 'Please select the date availability'
                     }
                 }
             },
-            sqft: {
+            quoteValidType: {
                 validators: {
-                     stringLength: {
-                        min: 2,
-                    },
                     notEmpty: {
-                        message: 'Please supply the square footage'
+                        message: 'Please select how long the quote is valid for'
                     }
                 }
             },
-            bath: {
-                validators: {
+            budgetTypeID: {
                     notEmpty: {
-                        message: 'Please select the number of bathrooms'
+                        message: 'Please supply the rate recurrence'
                     }
                 }
+            },
+            tax: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select the Tax/VAT/TVA'
+                    }
+                }
+            },
+            leaseTerm: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select the lease terms'
+                    }
+                }
+            },
+            noticeTerm: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select the notice term'
+                    }
+                }
+            },
+            cancellation: {
+                    notEmpty: {
+                        message: 'Please supply cancellation policy'
+                    }
             },
             comment: {
                 validators: {
                       stringLength: {
-                        min: 10,
-                        max: 250,
-                        message:'Please enter at least 4 characters and no more than 200'
+                        min: 4,
+                        max: 1000,
+                        message: 'The username must be more than 4 and less than 1000 characters long'
                     },
                     notEmpty: {
-                        message: 'Please supply a description of your project'
+                        message: 'Please supply a description of the property'
                     }
-                    }
+                    
                 }
             }
         })

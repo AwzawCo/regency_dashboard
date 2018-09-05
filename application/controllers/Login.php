@@ -92,12 +92,12 @@ class Login extends CI_Controller {
 	public function forgotPassword(){
 		$data['body'] = (isset($_SESSION["message"]) ? $_SESSION["message"] :"" );
 		//$data['password'] = $this->auth_model->generatePassword(10,false,'lud');
-		
-		$message = "Someone be hacking";
-		$to = "bijanagahi@yahoo.com";
-		$header = "From:bijan@jadesoftware.io";
-		$subject = "HAXXOR ALERT";
-		mail($to, $subject, $message, $header);
+		//TODO
+		// $message = "";
+		// $to = "";
+		// $header = "";
+		// $subject = "";
+		// mail($to, $subject, $message, $header);
 
 		$this->load->view("login_forgot_password", $data);
 	}
